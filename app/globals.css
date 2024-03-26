@@ -2,28 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+*,
+::after,
+::before {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+:root {
+  --foreground: 0, 0, 0;
+  --background: 0, 0%, 100%;
+
+  --primary: 180, 44%, 91%;
+  --secondary: 310, 26%, 84%;
+  --tertiary: 0, 1%, 96%;
+  --quaternary: 0, 0%, 85%;
+  --quinary: 0, 2%, 25%;
+  --quinary-light: 0, 0%, 22%;
+
+  --normal: 196, 6%, 66%;
+  --normal-light: 196, 18%, 84%;
+  --fighting: 23, 72%, 49%;
+  --fighting-light: 23, 57%, 70%;
+  --flying: 12, 4%, 73%;
+  --flying-light: 12, 2%, 85%;
+  --poison: 287, 41%, 64%;
+  --poison-light: 287, 40%, 76%;
+  --ground: 49, 44%, 46%;
+  --ground-light: 49, 37%, 76%;
+  --rock: 6, 31%, 56%;
+  --rock-light: 6, 25%, 65%;
+  --bug: 88, 43%, 44%;
+  --bug-light: 88, 34%, 62%;
+  --ghost: 263, 26%, 51%;
+  --ghost-light: 263, 25%, 65%;
+  --steel: 182, 15%, 67%;
+  --steel-light: 182, 9%, 76%;
+  --fire: 0, 95%, 70%;
+  --fire-light: 0, 73%, 78%;
+  --water: 209, 99%, 73%;
+  --water-light: 209, 86%, 72%;
+  --grass: 166, 58%, 55%;
+  --grass-light: 166, 60%, 72%;
+  --electric: 44, 100%, 65%;
+  --electric-light: 44, 69%, 76%;
+  --psychic: 325, 85%, 68%;
+  --psyshic-light: 325, 66%, 81%;
+  --ice: 194, 76%, 61%;
+  --ice-light: 194, 56%, 74%;
+  --dragon: 201, 56%, 57%;
+  --dragon-light: 201, 51%, 70%;
+  --dark: 201, 0%, 44%;
+  --dark-light: 201, 0%, 63%;
+  --fairy: 318, 100%, 77%;
+  --fairy-light: 318, 94%, 86%;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 @layer utilities {
