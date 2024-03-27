@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { red_rose, lalezar } from "./fonts";
+import { red_rose } from "./fonts";
 import "./globals.css";
+import Header from "./components/layout/header";
 
 export const metadata: Metadata = {
   title: "Pokèdex",
@@ -14,7 +15,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={lalezar.className}>{children}</body>
+      <body className={red_rose.className}>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
