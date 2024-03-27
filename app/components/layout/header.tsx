@@ -1,4 +1,5 @@
 import { lalezar } from "@/app/fonts";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -9,7 +10,6 @@ export default function Header() {
         >
           Pokèdex
         </h1>
-        <div className=" h-16 lg:h-24 bg-gradient-to-r from-primary to-secondary"></div>
       </header>
     </>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { red_rose } from "./fonts";
 import "./globals.css";
-import Header from "./components/layout/header";
+import Header from "./components/layout/Header";
 
 export const metadata: Metadata = {
   title: "Pokèdex",

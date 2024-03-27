@@ -1,9 +1,5 @@
-import React, { ReactNode } from "react";
+import { children } from "@/app/types/pokemon";
 
-interface ContentProps {
-  children: ReactNode;
-}
-
-export default function Content({ children }: ContentProps) {
+export default function Content({ children }: children) {
   return <p>{children}</p>;
 }
