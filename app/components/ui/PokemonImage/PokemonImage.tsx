@@ -18,7 +18,7 @@ export default async function PokemonImage({ src, name }: PokemonImageProps) {
       alt={name}
       placeholder="blur"
       blurDataURL={base64}
-      objectFit="contain"
+      objectFit="cover"
       width={512}
       height={512}
     />

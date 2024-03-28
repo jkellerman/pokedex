@@ -17,9 +17,10 @@ const config: Config = {
         quaternary: "hsl(var(--quaternary))",
         quinary: "hsl(var(--quinary))",
         "quinary-light": "hsl(var(--quinary-light))",
+        "quinary-dark": "hsl(var(--quinary-dark))",
         normal: {
           DEFAULT: "hsl(var(--normal))",
-          foreground: "hsl(var(--background))",
+          foreground: "hsl(var(--foreground))",
           light: "hsl(var(--normal-light))",
         },
         fighting: {
