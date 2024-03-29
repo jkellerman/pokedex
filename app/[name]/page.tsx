@@ -1,12 +1,18 @@
 import Link from "next/link";
-import { fetchPokemon, fetchPokemonList, fetchType } from "../lib/pokeAPI";
-import { PokemonList, Types, Type, Stats } from "../types/pokemon";
+import {
+  fetchEvolutionChain,
+  fetchPokemon,
+  fetchPokemonList,
+  fetchType,
+} from "../lib/pokeAPI";
+import { PokemonList, Types, Type } from "../types/pokemon";
 import { lalezar } from "../fonts";
 import PokemonImage from "../components/ui/PokemonImage/PokemonImage";
 import Navigation from "../components/ui/Navigation/Navigation";
 import Content from "../components/ui/Content/Content";
 import Pill from "../components/ui/Pill/Pill";
-import ProgressBar from "../components/ui/ProgressBar/ProgressBar";
+
+import TabsList from "../components/ui/TabsList/TabsList";
 
 export default async function PokemonPage({
   params,
@@ -18,7 +24,6 @@ export default async function PokemonPage({
   const pokemonData = await fetchPokemon(name);
   const pokemonList = await fetchPokemonList();
   const pokemonStats = pokemonData.stats;
-
   const pokemonId = pokemonData.id;
   const paddedId = String(pokemonId).padStart(4, "0");
   const formattedId = `#${paddedId}`;
@@ -31,6 +36,8 @@ export default async function PokemonPage({
     fetchType(typeUrls[0]),
     fetchType(typeUrls[1]),
   ]);
+
+  const evolutionChain = await fetchEvolutionChain(pokemonId);
 
   const concatTypes = secondType ? firstType.concat(secondType) : firstType;
   const uniqueNames = concatTypes.reduce(
@@ -111,7 +118,7 @@ export default async function PokemonPage({
                     d="M6.85355 3.14645C7.04882 3.34171 7.04882 3.65829 6.85355 3.85355L3.70711 7H12.5C12.7761 7 13 7.22386 13 7.5C13 7.77614 12.7761 8 12.5 8H3.70711L6.85355 11.1464C7.04882 11.3417 7.04882 11.6583 6.85355 11.8536C6.65829 12.0488 6.34171 12.0488 6.14645 11.8536L2.14645 7.85355C1.95118 7.65829 1.95118 7.34171 2.14645 7.14645L6.14645 3.14645C6.34171 2.95118 6.65829 2.95118 6.85355 3.14645Z"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="2"
+                    strokeWidth="2"
                     fillRule="evenodd"
                     clipRule="evenodd"
                   ></path>
@@ -151,32 +158,19 @@ export default async function PokemonPage({
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 gap-4 sm:px-16 ">
-          <div className="col-span-6 bg-tertiary rounded-xl">
+        <div className="grid grid-cols-12 grid-rows-2 xl:grid-rows-none gap-4 sm:px-16 ">
+          <div className=" col-span-12 row-span-1 xl:col-span-6 bg-tertiary rounded-xl">
             <PokemonImage
               src={pokemonData.sprites.other.home.front_default}
               name={name}
             />
           </div>
-          <div className="col-span-6 bg-gradient-to-r from-quinary-light to-quinary rounded-xl p-16">
-            <div className="w-full  flex-col justify-center">
-              {pokemonStats.map((item: Stats, i: number) => {
-                return (
-                  <div key={i} className="flex items-center gap-2 mb-4">
-                    <span className=" min-w-[80px] uppercase text-background font-bold">
-                      {item.stat.name
-                        .replace("special-attack", "sp-att")
-                        .replace("special-defense", "sp-def")}
-                    </span>
-                    <ProgressBar
-                      stat={item.base_stat}
-                      primaryType={primaryType}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+
+          <TabsList
+            pokemonStats={pokemonStats}
+            primaryType={primaryType}
+            evolutionChain={evolutionChain as PokemonList[]}
+          />
         </div>
       </section>
     </div>
