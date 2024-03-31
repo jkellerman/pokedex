@@ -5,6 +5,7 @@ import * as Tabs from "@radix-ui/react-tabs";
 import { PokemonList, Stats } from "@/app/types/pokemon";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import clsx from "clsx";
+import { tabTheme } from "../themes";
 
 interface TabsListProps {
   pokemonStats: Stats[];
@@ -37,62 +38,7 @@ export default function TabsList({
                   value={`tab${i + 1}`}
                   className={clsx(
                     `py-1 px-3 rounded-full font-bold text-background transition-colors hover:bg-black`,
-                    {
-                      // Normal
-                      "data-[state=active]:bg-normal data-[state=active]:text-normal-foreground":
-                        primaryType === "normal",
-                      // Fighting
-                      "data-[state=active]:bg-fighting data-[state=active]:text-fighting-foreground":
-                        primaryType === "fighting",
-                      // Flying
-                      "data-[state=active]:bg-flying data-[state=active]:text-flying-foreground":
-                        primaryType === "flying",
-                      // Poison
-                      "data-[state=active]:bg-poison data-[state=active]:text-poison-foreground":
-                        primaryType === "poison",
-                      // Ground
-                      "data-[state=active]:bg-ground data-[state=active]:text-ground-foreground":
-                        primaryType === "ground",
-                      // Rock
-                      "data-[state=active]:bg-rock data-[state=active]:text-rock-foreground":
-                        primaryType === "rock",
-                      // Bug
-                      "data-[state=active]:bg-bug data-[state=active]:text-bug-foreground":
-                        primaryType === "bug",
-                      // Ghost
-                      "data-[state=active]:bg-ghost data-[state=active]:text-ghost-foreground":
-                        primaryType === "ghost",
-                      // Steel
-                      "data-[state=active]:bg-steel data-[state=active]:text-steel-foreground":
-                        primaryType === "steel",
-                      // Fire
-                      "data-[state=active]:bg-fire data-[state=active]:text-fire-foreground":
-                        primaryType === "fire",
-                      // Water
-                      "data-[state=active]:bg-water data-[state=active]:text-water-foreground":
-                        primaryType === "water",
-                      // Grass
-                      "data-[state=active]:bg-grass data-[state=active]:text-grass-foreground":
-                        primaryType === "grass",
-                      // Electric
-                      "data-[state=active]:bg-electric data-[state=active]:text-electric-foreground":
-                        primaryType === "electric",
-                      // Psychic
-                      "data-[state=active]:bg-psychic data-[state=active]:text-psychic-foreground":
-                        primaryType === "psychic",
-                      // Ice
-                      "data-[state=active]:bg-ice data-[state=active]:text-ice-foreground":
-                        primaryType === "ice",
-                      // Dragon
-                      "data-[state=active]:bg-dragon data-[state=active]:text-dragon-foreground":
-                        primaryType === "dragon",
-                      // Dark
-                      "data-[state=active]:bg-dark data-[state=active]:text-dark-foreground":
-                        primaryType === "dark",
-                      // Fairy
-                      "data-[state=active]:bg-fairy data-[state=active]:text-fairy-foreground":
-                        primaryType === "fairy",
-                    }
+                    tabTheme(primaryType)
                   )}
                 >
                   {item}

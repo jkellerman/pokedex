@@ -75,7 +75,7 @@ const config: Config = {
         },
         grass: {
           DEFAULT: "hsl(var(--grass))",
-          foreground: "hsl(var(--foreground))",
+          foreground: "hsl(var(--background))",
           light: "hsl(var(--grass-light))",
         },
         electric: {
