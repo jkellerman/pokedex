@@ -1,28 +1,44 @@
-"use client";
+import Card from "../Card/Card";
+import { CardGrid, CardListItem } from "../CardGrid/CardGrid";
+import Content from "../Content/Content";
 
 import { PokemonList } from "@/app/types/pokemon";
-import Card from "../Card/Card";
-import Content from "../Content/Content";
 
 interface PokemonListProps {
   pokemonList: PokemonList[];
+  loadMore?: boolean;
+  isError: boolean;
+  loadMorePokemon?: () => Promise<void>;
 }
 
-export default function CardList({ pokemonList }: PokemonListProps) {
+export default function CardList({
+  pokemonList,
+  loadMore,
+  isError,
+  loadMorePokemon,
+}: PokemonListProps) {
+  if (isError)
+    return (
+      <div className="justify-center mb-12 w-full gap-4 sm:gap-8">
+        Error Loading Pokemon
+      </div>
+    );
   return (
     <>
-      <div className="sm:max-w-[525px] sm:text-left sm:self-start mb-8">
-        <Content>
-          Below is a list of the original 151 Pokèmon from Bulbasaur to Mew. Use
-          the search above to filter through them by name !
-        </Content>
-      </div>
-
-      <div className="grid gap-6 justify-center grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 mb-8">
+      <CardGrid>
         {pokemonList.map((pokemon, i) => {
-          return <Card key={i} name={pokemon.name} url={pokemon.url} />;
+          return (
+            <CardListItem key={i}>
+              <Card
+                name={pokemon.name}
+                url={pokemon.url}
+                id={pokemon.id}
+                type={pokemon.type}
+              />
+            </CardListItem>
+          );
         })}
-      </div>
+      </CardGrid>
     </>
   );
 }

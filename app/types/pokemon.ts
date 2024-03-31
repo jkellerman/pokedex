@@ -1,8 +1,13 @@
 import { ReactNode } from "react";
 
-export interface PokemonList {
+export interface Pokemon {
   name: string;
   url: string;
+}
+
+export interface PokemonList extends Pokemon {
+  id: number;
+  type: string;
 }
 
 export interface PokemonListProps {
@@ -13,13 +18,8 @@ export interface children {
   children: ReactNode;
 }
 
-export interface Type {
-  name: string;
-  url: string;
-}
-
 export interface Types {
-  type: Type;
+  type: Pokemon;
 }
 
 export interface Stats {

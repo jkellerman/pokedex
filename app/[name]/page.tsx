@@ -1,11 +1,13 @@
 import Link from "next/link";
 import {
   fetchEvolutionChain,
-  fetchPokemon,
+  fetchFlavorText,
+  fetchPokemonDetails,
   fetchPokemonList,
+  fetchPokemonNames,
   fetchType,
 } from "../lib/pokeAPI";
-import { PokemonList, Types, Type } from "../types/pokemon";
+import { PokemonList, Types, Pokemon } from "../types/pokemon";
 import { lalezar } from "../fonts";
 import PokemonImage from "../components/ui/PokemonImage/PokemonImage";
 import Navigation from "../components/ui/Navigation/Navigation";
@@ -13,6 +15,7 @@ import Content from "../components/ui/Content/Content";
 import Pill from "../components/ui/Pill/Pill";
 
 import TabsList from "../components/ui/TabsList/TabsList";
+import { formatId } from "../utils/utils";
 
 export default async function PokemonPage({
   params,
@@ -21,30 +24,26 @@ export default async function PokemonPage({
 }) {
   const { name } = params;
 
-  const pokemonData = await fetchPokemon(name);
-  const pokemonList = await fetchPokemonList();
-  const pokemonStats = pokemonData.stats;
-  const pokemonId = pokemonData.id;
-  const paddedId = String(pokemonId).padStart(4, "0");
-  const formattedId = `#${paddedId}`;
+  const pokemonData = await fetchPokemonDetails(name);
+  const pokemonNames = await fetchPokemonNames();
 
-  const primaryType = pokemonData.types[0].type.name;
-  const types = pokemonData.types;
-  const typeNames = types.map((item: Types) => item.type.name);
-  const typeUrls = types.map((item: Types) => item.type.url);
+  const evolutionChain = await fetchEvolutionChain(pokemonData?.pokemonId);
+
+  const flavorText = await fetchFlavorText(pokemonData?.pokemonId);
+
+  const typeNames = pokemonData?.types.map((item: Types) => item.type.name);
+  const typeUrls = pokemonData?.types.map((item: Types) => item.type.url);
   const [firstType, secondType] = await Promise.all([
     fetchType(typeUrls[0]),
     fetchType(typeUrls[1]),
   ]);
 
-  const evolutionChain = await fetchEvolutionChain(pokemonId);
-
   const concatTypes = secondType ? firstType.concat(secondType) : firstType;
   const uniqueNames = concatTypes.reduce(
-    (accumulator: Type[], current: Type) => {
+    (accumulator: Pokemon[], current: Pokemon) => {
       // Check if the current weakness's name already exists in the accumulator array
       const exists = accumulator.some(
-        (item: Type) => item.name === current.name
+        (item: Pokemon) => item.name === current.name
       );
 
       // If the name doesn't exist, add it to the accumulator array
@@ -56,10 +55,9 @@ export default async function PokemonPage({
     },
     []
   );
-
   const weaknesses = uniqueNames.slice(0, 5);
 
-  const index = pokemonList.findIndex(
+  const index = pokemonNames.findIndex(
     (pokemon: PokemonList) => pokemon.name === name
   );
 
@@ -68,10 +66,10 @@ export default async function PokemonPage({
 
   if (index !== -1) {
     if (index > 0) {
-      prevPokemon = pokemonList[index - 1].name;
+      prevPokemon = pokemonNames[index - 1].name;
     }
-    if (index < pokemonList.length - 1) {
-      nextPokemon = pokemonList[index + 1].name;
+    if (index < pokemonNames.length - 1) {
+      nextPokemon = pokemonNames[index + 1].name;
     }
   }
 
@@ -80,16 +78,16 @@ export default async function PokemonPage({
       <nav className="w-full h-16 sm:h-[100px] xl:h-[133px] flex flex-row gap-4 ">
         <Navigation
           index={prevPokemon}
-          primaryType={primaryType}
+          primaryType={pokemonData?.primaryType}
           direction="left"
-          pokemonId={pokemonId - 1}
+          pokemonId={pokemonData?.pokemonId - 1}
         />
 
         <Navigation
           index={nextPokemon}
-          primaryType={primaryType}
+          primaryType={pokemonData?.primaryType}
           direction="right"
-          pokemonId={pokemonId + 1}
+          pokemonId={pokemonData?.pokemonId + 1}
         />
       </nav>
       <section className="flex flex-col max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-3xl xl:max-w-5xl 2xl:max-w-[1062px] items-center justify-center mx-auto w-11/12 lg:w-full bg-white mt-[-20px] md:mt-[-30px] z-10 relative py-8 sm:py-16 rounded-t-[50px]">
@@ -100,7 +98,7 @@ export default async function PokemonPage({
           <span
             className={`${lalezar.className} uppercase text-quinary-light text-lg sm:text-2xl`}
           >
-            {formattedId}
+            {formatId(pokemonData?.pokemonId)}
           </span>
         </div>
         <div className="w-full sm:px-16">
@@ -126,11 +124,20 @@ export default async function PokemonPage({
               </span>
               <span className="font-bold">Go Home</span>
             </Link>
-            <div className="max-w-[554px] text-start mb-2 lg:mb-4 ">
-              <Content>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Exercitationem nemo laborum, minima assumenda cumque.
-              </Content>
+            <div className="mb-4 flex flex-col xl:flex-row justify-between gap-6 xl:gap-0">
+              <div className="max-w-[554px] text-start">
+                <Content>{flavorText}</Content>
+              </div>
+              <div className="flex flex-col xl:items-end">
+                <div>
+                  <span className="font-bold">Weight: </span>
+                  <span>{pokemonData?.weight.toFixed(1)}kg</span>
+                </div>
+                <div>
+                  <span className="font-bold">Height: </span>
+                  <span>{pokemonData?.height.toFixed(1)}m</span>
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex justify-between w-full gap-8 mb-4 md:mb-8">
@@ -151,7 +158,7 @@ export default async function PokemonPage({
                 Weaknesses
               </h2>
               <div className="flex flex-wrap justify-end gap-2">
-                {weaknesses.map((item: Type, i: number) => {
+                {weaknesses.map((item: Pokemon, i: number) => {
                   return <Pill key={i} type={item.name} />;
                 })}
               </div>
@@ -160,15 +167,12 @@ export default async function PokemonPage({
         </div>
         <div className="grid grid-cols-12 grid-rows-2 xl:grid-rows-none gap-4 sm:px-16 ">
           <div className=" col-span-12 row-span-1 xl:col-span-6 bg-tertiary rounded-xl">
-            <PokemonImage
-              src={pokemonData.sprites.other.home.front_default}
-              name={name}
-            />
+            <PokemonImage src={pokemonData?.imageUrl} name={name} />
           </div>
 
           <TabsList
-            pokemonStats={pokemonStats}
-            primaryType={primaryType}
+            pokemonStats={pokemonData?.pokemonStats}
+            primaryType={pokemonData?.primaryType}
             evolutionChain={evolutionChain as PokemonList[]}
           />
         </div>
