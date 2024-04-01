@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { red_rose } from "./fonts";
 import "./globals.css";
-import Header from "./components/layout/Header";
+import Header from "./components/ui/Header/Header";
 import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {

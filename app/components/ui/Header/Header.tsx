@@ -1,5 +1,4 @@
 import { lalezar } from "@/app/fonts";
-import Link from "next/link";
 
 export default function Header() {
   return (
