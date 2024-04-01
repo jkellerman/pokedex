@@ -27,7 +27,6 @@ export default function AutoComplete({
   const [numberOfSearchedPokemon, setNumberOfSearchPokemon] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [noPokemon, setNoPokemon] = useState(false);
-
   const searchFilter = (searchableNames: Pokemon[]) => {
     return searchableNames.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(inputValue.toLowerCase())
@@ -41,7 +40,7 @@ export default function AutoComplete({
         setSearchList([]);
         return;
       }
-      const filteredPokemonNames = searchFilter(pokemonNames); // filter through the original 151 pokemon names. This will be used to send api for these pokemon
+      const filteredPokemonNames = searchFilter(pokemonNames); // filter through the original 151 pokemon names. This will be used to send request to api for each pokemon
       if (value.length >= 2) {
         setIsLoading(true);
         setNoPokemon(false);
@@ -143,15 +142,17 @@ export default function AutoComplete({
           />
         )}
 
-        {inputValue.length >= 2 ||
-          (!searchList.length && (
+        {inputValue.length < 2 &&
+          searchList.length === 0 &&
+          pokemon.length !== 151 && (
             <button
               onClick={loadMorePokemon}
-              className="bg-quinary-dark py-4 px-8 rounded-2xl font-bold text-background mb-8 hover:bg-quinary-light transition-colors w-[147.5px]"
+              className="bg-quinary-dark py-4 px-8 rounded-2xl font-bold text-background mb-8 hover:bg-slate-600 transition-colors w-[147.5px]"
+              disabled={loadMore ? true : false}
             >
               {loadMore ? "Loading..." : "Load More"}
             </button>
-          ))}
+          )}
       </div>
     </>
   );
