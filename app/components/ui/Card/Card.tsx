@@ -1,24 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PokemonList } from "@/app/types/pokemon";
-import { lalezar } from "@/app/fonts";
+import { bakbak_One, lalezar } from "@/app/fonts";
 import { formatId } from "@/app/utils/utils";
 import clsx from "clsx";
 import { cardPillTheme } from "../themes";
-import Logo from "../../Logo/Logo";
+import Logo from "../Logo/Logo";
 
 export default function Card({ name, url, id, type }: PokemonList) {
   return (
     <Link
       href={`/${name}`}
-      className={`${lalezar.className} block overflow-hidden min-h-[130px] max-h-[130px] p-4 list-none rounded-2xl capitalize font-bold text-xl shadow-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,1) bg-[#ececec]`}
+      className={`${lalezar.className} block overflow-hidden min-h-[130px] max-h-[130px] p-4 list-none rounded-2xl capitalize font-bold text-xl shadow-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,1) bg-gradient-to-r from-[#ececec] to-[#ececec] hover:to-primary motion-reduce:transition-none motion-reduce:hover:transform-none transition hover:scale-[1.1] active:scale-[0.95]`}
     >
       <span className="flex flex-col gap-4">
         <span>{name}</span>
         <span className="flex items-center justify-between relative bg-transparent">
           <span
             className={clsx(
-              `py-1 px-2  rounded-[10px] capitalize text-xs sm:text-base font-bold z-10`,
+              `${bakbak_One.className} py-1 px-2 rounded-[10px] capitalize text-xs sm:text-base z-10 font-bold`,
               cardPillTheme(type)
             )}
           >

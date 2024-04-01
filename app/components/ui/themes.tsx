@@ -59,111 +59,111 @@ export const cardPillTheme = (type: string) => {
 export const navigationTheme = (primaryType: string, direction: string) => {
   return {
     // Normal
-    "bg-gradient-to-r from-normal to-normal-light text-normal-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-normal-light to-normal via-normal bg-size-200 bg-pos-0 hover:bg-pos-100 text-normal-foreground":
       primaryType === "normal" && direction === "left",
-    "bg-gradient-to-l from-normal to-normal-light text-normal-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-normal-light to-normal via-normal bg-size-200 bg-pos-100 hover:bg-pos-0 text-normal-foreground":
       primaryType === "normal" && direction === "right",
 
     // Fighting
-    "bg-gradient-to-r from-fighting to-fighting-light text-fighting-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-fighting-light to-fighting via-fighting bg-size-200 bg-pos-0 hover:bg-pos-100 text-fighting-foreground":
       primaryType === "fighting" && direction === "left",
-    "bg-gradient-to-l from-fighting to-fighting-light text-fighting-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-fighting-light to-fighting via-fighting bg-size-200 bg-pos-100 hover:bg-pos-0 text-fighting-foreground":
       primaryType === "fighting" && direction === "right",
 
     // Flying
-    "bg-gradient-to-r from-flying to-flying-light text-flying-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-flying-light to-flying via-flying bg-size-200 bg-pos-0 hover:bg-pos-100 text-flying-foreground":
       primaryType === "flying" && direction === "left",
-    "bg-gradient-to-l from-flying to-flying-light text-flying-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-flying-light to-flying via-flying bg-size-200 bg-pos-100 hover:bg-pos-0 text-flying-foreground":
       primaryType === "flying" && direction === "right",
 
     // Poison
-    "bg-gradient-to-r from-poison to-poison-light text-poison-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-poison-light to-poison via-poison bg-size-200 bg-pos-0 hover:bg-pos-100 text-poison-foreground":
       primaryType === "poison" && direction === "left",
-    "bg-gradient-to-l from-poison to-poison-light text-poison-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-poison-light to-poison via-poison bg-size-200 bg-pos-100 hover:bg-pos-0 text-poison-foreground":
       primaryType === "poison" && direction === "right",
 
     // Ground
-    "bg-gradient-to-r from-ground to-ground-light text-ground-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-ground-light to-ground via-ground bg-size-200 bg-pos-0 hover:bg-pos-100 text-ground-foreground":
       primaryType === "ground" && direction === "left",
-    "bg-gradient-to-l from-ground to-ground-light text-ground-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-ground-light to-ground via-ground bg-size-200 bg-pos-100 hover:bg-pos-0 text-ground-foreground":
       primaryType === "ground" && direction === "right",
 
     // Rock
-    "bg-gradient-to-r from-rock to-rock-light text-rock-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-rock-light to-rock via-rock bg-size-200 bg-pos-0 hover:bg-pos-100 text-rock-foreground":
       primaryType === "rock" && direction === "left",
-    "bg-gradient-to-l from-rock to-rock-light text-rock-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-rock-light to-rock via-rock bg-size-200 bg-pos-100 hover:bg-pos-0 text-rock-foreground":
       primaryType === "rock" && direction === "right",
 
     // Bug
-    "bg-gradient-to-r from-bug to-bug-light text-bug-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-bug-light to-bug via-bug bg-size-200 bg-pos-0 hover:bg-pos-100 text-bug-foreground":
       primaryType === "bug" && direction === "left",
-    "bg-gradient-to-l from-bug to-bug-light text-bug-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-bug-light to-bug via-bug bg-size-200 bg-pos-100 hover:bg-pos-0 text-bug-foreground":
       primaryType === "bug" && direction === "right",
 
     // Ghost
-    "bg-gradient-to-r from-ghost to-ghost-light text-ghost-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-ghost-light to-ghost via-ghost bg-size-200 bg-pos-0 hover:bg-pos-100 text-ghost-foreground":
       primaryType === "ghost" && direction === "left",
-    "bg-gradient-to-l from-ghost to-ghost-light text-ghost-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-ghost-light to-ghost via-ghost bg-size-200 bg-pos-100 hover:bg-pos-0 text-ghost-foreground":
       primaryType === "ghost" && direction === "right",
 
     // Steel
-    "bg-gradient-to-r from-steel to-steel-light text-steel-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-steel-light to-steel via-steel bg-size-200 bg-pos-0 hover:bg-pos-100 text-steel-foreground":
       primaryType === "steel" && direction === "left",
-    "bg-gradient-to-l from-steel to-steel-light text-steel-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-steel-light to-steel via-steel bg-size-200 bg-pos-100 hover:bg-pos-0 text-steel-foreground":
       primaryType === "steel" && direction === "right",
 
     // Fire
-    "bg-gradient-to-r from-fire to-fire-light text-fire-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-fire-light to-fire via-fire bg-size-200 bg-pos-0 hover:bg-pos-100 text-fire-foreground":
       primaryType === "fire" && direction === "left",
-    "bg-gradient-to-l from-fire to-fire-light text-fire-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-fire-light to-fire via-fire bg-size-200 bg-pos-100 hover:bg-pos-0 text-fire-foreground":
       primaryType === "fire" && direction === "right",
 
     // Water
-    "bg-gradient-to-r from-water to-water-light text-water-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-water-light to-water via-water bg-size-200 bg-pos-0 hover:bg-pos-100 text-water-foreground":
       primaryType === "water" && direction === "left",
-    "bg-gradient-to-l from-water to-water-light text-water-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-water-light to-water via-water bg-size-200 bg-pos-100 hover:bg-pos-0 text-water-foreground":
       primaryType === "water" && direction === "right",
 
     // Grass
-    "bg-gradient-to-r from-grass to-grass-light text-grass-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-grass-light to-grass via-grass bg-size-200 bg-pos-0 hover:bg-pos-100 text-grass-foreground":
       primaryType === "grass" && direction === "left",
-    "bg-gradient-to-l from-grass to-grass-light text-grass-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-grass-light to-grass via-grass bg-size-200 bg-pos-100 hover:bg-pos-0 text-grass-foreground":
       primaryType === "grass" && direction === "right",
 
     // Electric
-    "bg-gradient-to-r from-electric to-electric-light text-electric-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-electric-light to-electric via-electric bg-size-200 bg-pos-0 hover:bg-pos-100 text-electric-foreground":
       primaryType === "electric" && direction === "left",
-    "bg-gradient-to-l from-electric to-electric-light text-electric-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-electric-light to-electric via-electric bg-size-200 bg-pos-100 hover:bg-pos-0 text-electric-foreground":
       primaryType === "electric" && direction === "right",
 
     // Psychic
-    "bg-gradient-to-r from-psychic to-psychic-light text-psychic-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-psychic-light to-psychic via-psychic bg-size-200 bg-pos-0 hover:bg-pos-100 text-psychic-foreground":
       primaryType === "psychic" && direction === "left",
-    "bg-gradient-to-l from-psychic to-psychic-light text-psychic-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-psychic-light to-psychic via-psychic bg-size-200 bg-pos-100 hover:bg-pos-0 text-psychic-foreground":
       primaryType === "psychic" && direction === "right",
 
     // Ice
-    "bg-gradient-to-r from-ice to-ice-light text-ice-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-ice-light to-ice via-ice bg-size-200 bg-pos-0 hover:bg-pos-100 text-ice-foreground":
       primaryType === "ice" && direction === "left",
-    "bg-gradient-to-l from-ice to-ice-light text-ice-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-ice-light to-ice via-ice bg-size-200 bg-pos-100 hover:bg-pos-0 text-ice-foreground":
       primaryType === "ice" && direction === "right",
 
     // Dragon
-    "bg-gradient-to-r from-dragon to-dragon-light text-dragon-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-dragon-light to-dragon via-dragon bg-size-200 bg-pos-0 hover:bg-pos-100 text-dragon-foreground":
       primaryType === "dragon" && direction === "left",
-    "bg-gradient-to-l from-dragon to-dragon-light text-dragon-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-dragon-light to-dragon via-dragon bg-size-200 bg-pos-100 hover:bg-pos-0 text-dragon-foreground":
       primaryType === "dragon" && direction === "right",
 
     // Dark
-    "bg-gradient-to-r from-dark to-dark-light text-dark-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-dark-light to-dark via-dark bg-size-200 bg-pos-0 hover:bg-pos-100 text-dark-foreground":
       primaryType === "dark" && direction === "left",
-    "bg-gradient-to-l from-dark to-dark-light text-dark-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-dark-light to-dark via-dark bg-size-200 bg-pos-100 hover:bg-pos-0 text-dark-foreground":
       primaryType === "dark" && direction === "right",
 
     // Fairy
-    "bg-gradient-to-r from-fairy to-fairy-light text-fairy-foreground":
+    "bg-gradient-to-r transition-all duration-300 from-fairy-light to-fairy via-fairy bg-size-200 bg-pos-0 hover:bg-pos-100 text-fairy-foreground":
       primaryType === "fairy" && direction === "left",
-    "bg-gradient-to-l from-fairy to-fairy-light text-fairy-foreground":
+    "bg-gradient-to-l transition-all duration-300 from-fairy-light to-fairy via-fairy bg-size-200 bg-pos-100 hover:bg-pos-0 text-fairy-foreground":
       primaryType === "fairy" && direction === "right",
   };
 };
@@ -220,59 +220,44 @@ export const pillTheme = (type: string) => {
 export const progressTheme = (primaryType: string) => {
   return {
     // Normal
-    "bg-gradient-to-r from-normal to-normal-light text-normal-foreground":
-      primaryType === "normal",
+    "bg-normal from-normal text-normal-foreground": primaryType === "normal",
     // Fighting
-    "bg-gradient-to-r from-fighting to-fighting-light text-fighting-foreground":
+    "bg-fighting from-fighting text-fighting-foreground":
       primaryType === "fighting",
     // Flying
-    "bg-gradient-to-r from-flying to-flying-light text-flying-foreground":
-      primaryType === "flying",
+    "bg-flying from-flying text-flying-foreground": primaryType === "flying",
     // Poison
-    "bg-gradient-to-r from-poison to-poison-light text-poison-foreground":
-      primaryType === "poison",
+    "bg-poison from-poison text-poison-foreground": primaryType === "poison",
     // Ground
-    "bg-gradient-to-r from-ground to-ground-light text-ground-foreground":
-      primaryType === "ground",
+    "bg-ground from-ground text-ground-foreground": primaryType === "ground",
     // Rock
-    "bg-gradient-to-r from-rock to-rock-light text-rock-foreground":
-      primaryType === "rock",
+    "bg-rock from-rock text-rock-foreground": primaryType === "rock",
     // Bug
-    "bg-gradient-to-r from-bug to-bug-light text-bug-foreground":
-      primaryType === "bug",
+    "bg-bug from-bug text-bug-foreground": primaryType === "bug",
     // Ghost
-    "bg-gradient-to-r from-ghost to-ghost-light text-ghost-foreground":
-      primaryType === "ghost",
+    "bg-ghost from-ghost text-ghost-foreground": primaryType === "ghost",
     // Steel
-    "bg-gradient-to-r from-steel to-steel-light text-steel-foreground":
-      primaryType === "steel",
+    "bg-steel from-steel text-steel-foreground": primaryType === "steel",
     // Fire
-    "bg-gradient-to-r from-fire to-fire-light text-fire-foreground":
-      primaryType === "fire",
+    "bg-fire from-fire text-fire-foreground": primaryType === "fire",
     // Water
-    "bg-gradient-to-r from-water to-water-light text-water-foreground":
-      primaryType === "water",
+    "bg-water from-water text-water-foreground": primaryType === "water",
     // Grass
-    "bg-gradient-to-r from-grass to-grass-light text-grass-foreground":
-      primaryType === "grass",
+    "bg-grass from-grass text-grass-foreground": primaryType === "grass",
     // Electric
-    "bg-gradient-to-r from-electric to-electric-light text-electric-foreground":
+    "bg-electric from-electric text-electric-foreground":
       primaryType === "electric",
     // Psychic
-    "bg-gradient-to-r from-psychic to-psychic-light text-psychic-foreground":
+    "bg-psychic from-psychic text-psychic-foreground":
       primaryType === "psychic",
     // Ice
-    "bg-gradient-to-r from-ice to-ice-light text-ice-foreground":
-      primaryType === "ice",
+    "bg-ice from-ice text-ice-foreground": primaryType === "ice",
     // Dragon
-    "bg-gradient-to-r from-dragon to-dragon-light text-dragon-foreground":
-      primaryType === "dragon",
+    "bg-dragon from-dragon text-dragon-foreground": primaryType === "dragon",
     // Dark
-    "bg-gradient-to-r from-dark to-dark-light text-dark-foreground":
-      primaryType === "dark",
+    "bg-dark from-dark text-dark-foreground": primaryType === "dark",
     // Fairy
-    "bg-gradient-to-r from-fairy to-fairy-light text-fairy-foreground":
-      primaryType === "fairy",
+    "bg-fairy from-fairy text-fairy-foreground": primaryType === "fairy",
   };
 };
 
