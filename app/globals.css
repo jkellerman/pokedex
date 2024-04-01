@@ -61,6 +61,7 @@ body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
   -webkit-font-smoothing: antialiased;
+  overflow-y: scroll;
 }
 
 @layer base {
