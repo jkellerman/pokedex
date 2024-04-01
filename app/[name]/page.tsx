@@ -3,7 +3,6 @@ import {
   fetchEvolutionChain,
   fetchFlavorText,
   fetchPokemonDetails,
-  fetchPokemonList,
   fetchPokemonNames,
   fetchType,
 } from "../lib/pokeAPI";
@@ -29,7 +28,7 @@ export default async function PokemonPage({
 
   const evolutionChain = await fetchEvolutionChain(pokemonData?.pokemonId);
 
-  const flavorText = await fetchFlavorText(pokemonData?.pokemonId);
+  const flavorText = await fetchFlavorText(pokemonData?.pokemonId); // Text about the pokemon
 
   const typeNames = pokemonData?.types.map((item: Types) => item.type.name);
   const typeUrls = pokemonData?.types.map((item: Types) => item.type.url);
@@ -38,25 +37,41 @@ export default async function PokemonPage({
     fetchType(typeUrls[1]),
   ]);
 
-  const concatTypes = secondType ? firstType.concat(secondType) : firstType;
-  const uniqueNames = concatTypes.reduce(
-    (accumulator: Pokemon[], current: Pokemon) => {
-      // Check if the current weakness's name already exists in the accumulator array
-      const exists = accumulator.some(
-        (item: Pokemon) => item.name === current.name
-      );
-
-      // If the name doesn't exist, add it to the accumulator array
-      if (!exists) {
-        accumulator.push(current);
-      }
-
-      return accumulator;
-    },
-    []
+  // the pokemons biggest weaknesses
+  const firstTypeDoubleDamage =
+    firstType && firstType[0].map((item: Pokemon) => item.name);
+  const secondTypeDoubleDamage = secondType
+    ? secondType[0].map((item: Pokemon) => item.name)
+    : [];
+  const pokemonDoubleDamageTypes = firstTypeDoubleDamage.concat(
+    secondTypeDoubleDamage
   );
-  const weaknesses = uniqueNames.slice(0, 5);
+  // Types the pokemon receive less damage from (needed to get the correct weaknesses for each pokemon)
+  const firstTypeHalfDamage =
+    firstType && firstType[1].map((item: Pokemon) => item.name);
+  const secondTypeHalfDamage = secondType
+    ? secondType[1].map((item: Pokemon) => item.name)
+    : [];
+  const firstTypeNoDamage =
+    firstType && firstType[2].map((item: Pokemon) => item.name);
+  const secondTypeNoDamage = secondType
+    ? secondType[2]?.map((item: Pokemon) => item.name)
+    : [];
 
+  const damageResistantTypes = firstTypeHalfDamage.concat(
+    secondTypeHalfDamage,
+    firstTypeNoDamage,
+    secondTypeNoDamage
+  );
+
+  // Check if pokemonDoubleDamageTypes contains damage Resistant Types to get the correct weaknesses
+  const checkArrays = pokemonDoubleDamageTypes.filter(
+    (type: Pokemon) => !damageResistantTypes.includes(type)
+  );
+  const weaknesses = checkArrays.filter(
+    (type: Pokemon, index: number, array: Pokemon[]) =>
+      array.indexOf(type) === index
+  );
   const index = pokemonNames.findIndex(
     (pokemon: PokemonList) => pokemon.name === name
   );
@@ -151,15 +166,15 @@ export default async function PokemonPage({
                 })}
               </div>
             </div>
-            <div className="max-w-[350px]">
+            <div className="max-w-[350px] xl:max-w-[400px]">
               <h2
                 className={`${lalezar.className} text-2xl mb-4 md:mb-8 text-end`}
               >
                 Weaknesses
               </h2>
               <div className="flex flex-wrap justify-end gap-2">
-                {weaknesses.map((item: Pokemon, i: number) => {
-                  return <Pill key={i} type={item.name} />;
+                {weaknesses.map((item: string, i: number) => {
+                  return <Pill key={i} type={item} />;
                 })}
               </div>
             </div>

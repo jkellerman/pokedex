@@ -95,7 +95,11 @@ export async function fetchType(endpoint: string) {
   try {
     const url = `${endpoint}`;
     const data = await fetchData(url);
-    return data.damage_relations.double_damage_from;
+    const doubleDamageFrom = data.damage_relations.double_damage_from;
+    const halfDamageFrom = data.damage_relations.half_damage_from;
+    const noDamageFrom = data.damage_relations.no_damage_from;
+
+    return [doubleDamageFrom, halfDamageFrom, noDamageFrom];
   } catch (error) {
     return null;
   }
