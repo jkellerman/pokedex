@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { red_rose } from "./fonts";
 import "./globals.css";
 import Header from "./components/layout/Header";
+import NextTopLoader from "nextjs-toploader";
 
 export const metadata: Metadata = {
   title: "Pokèdex",
@@ -16,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={red_rose.className}>
+        <NextTopLoader />
         <Header />
         {children}
       </body>
