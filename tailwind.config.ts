@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      animation: {
+        fade: "fade 250ms ease-in-out",
+      },
       backgroundSize: {
         "size-200": "200% 200%",
       },
@@ -114,6 +117,12 @@ const config: Config = {
           DEFAULT: "hsl(var(--fairy))",
           foreground: "hsl(var(--foreground))",
           light: "hsl(var(--fairy-light))",
+        },
+      },
+      keyframes: {
+        fade: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
     },

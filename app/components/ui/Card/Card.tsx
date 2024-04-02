@@ -11,7 +11,7 @@ export default function Card({ name, url, id, type }: PokemonList) {
   return (
     <Link
       href={`/${name}`}
-      className={`${lalezar.className} block overflow-hidden min-h-[130px] max-h-[130px] p-4 list-none rounded-2xl capitalize font-bold text-xl shadow-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,1) bg-gradient-to-r from-[#ececec] to-[#ececec] hover:to-primary motion-reduce:transition-none motion-reduce:hover:transform-none transition hover:scale-[1.1] active:scale-[0.95]`}
+      className={`${lalezar.className} block overflow-hidden min-h-[130px] max-h-[130px] p-4 list-none rounded-2xl capitalize font-bold text-xl shadow-lg shadow-[0_35px_60px_-15px_rgba(0,0,0,1) bg-gradient-to-r from-[#ececec] to-[#ececec] hover:to-primary motion-reduce:transition-none motion-reduce:hover:transform-none transition hover:scale-[1.1] active:scale-[0.95] animate-fade`}
     >
       <span className="flex flex-col gap-4">
         <span>{name}</span>
