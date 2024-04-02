@@ -30,7 +30,7 @@ export default function ProgressBar({ stat, primaryType }: ProgressBarProps) {
             progress === 250
               ? 250 - progress
               : progress >= 150
-              ? 160 - progress
+              ? 180 - progress
               : 140 - progress
           }%)`,
           // For accurate representation of stats in progress bar, otherwise some stats won't show
