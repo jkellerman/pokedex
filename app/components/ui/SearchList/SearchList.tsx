@@ -8,6 +8,7 @@ import Content from "../Content/Content";
 import { CardSkeleton } from "../skeletons";
 import { CardGrid, CardListItem } from "../CardGrid/CardGrid";
 import { useDebouncedCallback } from "use-debounce";
+import { Button } from "../Button/Button";
 interface PokemonListProps {
   pokemonList: PokemonList[];
   pokemonNames: Pokemon[];
@@ -145,13 +146,13 @@ export default function AutoComplete({
         {inputValue.length < 2 &&
           searchList.length === 0 &&
           pokemon.length !== 151 && (
-            <button
+            <Button
               onClick={loadMorePokemon}
-              className="bg-quinary-dark py-4 px-8 rounded-2xl font-bold text-background mb-8 hover:bg-slate-600 transition-colors w-[147.5px]"
+              className="py-4 px-8 rounded-2xl text-background mb-8 w-[147.5px]"
               disabled={loadMore ? true : false}
             >
               {loadMore ? "Loading..." : "Load More"}
-            </button>
+            </Button>
           )}
       </div>
     </>
