@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  fetchAbilitiesWithEffects,
   fetchEvolutionChain,
   fetchFlavorText,
   fetchPokemonDetails,
@@ -18,6 +19,8 @@ import PokemonMeasurements from "../components/ui/PokemonMeasurements/PokemonMea
 import PokemonTypes from "../components/ui/PokemonTypes/PokemonTypes";
 import PokemonWeaknesses from "../components/ui/PokemonWeaknesses/PokemonWeaknesses";
 import PokemonAbility from "../components/ui/PokemonAbility/PokemonAbility";
+import { Suspense } from "react";
+import { AbilitiesSkeleton } from "../components/ui/skeletons";
 import Icon from "../components/ui/Icon/Icon";
 
 export default async function PokemonPage({
@@ -30,6 +33,7 @@ export default async function PokemonPage({
   const pokemonData = await fetchPokemonDetails(name);
 
   const pokemonNames = await fetchPokemonNames();
+  const pokemonAbilities = await fetchAbilitiesWithEffects(name);
 
   const evolutionChain = await fetchEvolutionChain(pokemonData?.pokemonId);
 
@@ -154,13 +158,15 @@ export default async function PokemonPage({
         </div>
         <section className="self-start">
           <h2 className="text-xl font-bold mb-4">Abilities</h2>
-          {pokemonData?.abilities?.map((ability, i) => (
-            <PokemonAbility
-              key={i}
-              name={ability?.name}
-              effect={ability?.effect}
-            />
-          ))}
+          <Suspense fallback={<AbilitiesSkeleton />}>
+            {pokemonAbilities?.map((ability, i) => (
+              <PokemonAbility
+                key={i}
+                name={ability?.name}
+                effect={ability?.effect}
+              />
+            ))}
+          </Suspense>
         </section>
       </div>
     </div>

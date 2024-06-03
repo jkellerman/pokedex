@@ -15,12 +15,8 @@ export async function fetchPokemonDetails(name: string) {
   try {
     const url = `${BASE_ROUTE}/pokemon/${name}`;
     const data = await fetchData(url);
-    const abilitiesWithEffects = await fetchAbilitiesWithEffects(
-      data.abilities
-    );
 
     return {
-      abilities: abilitiesWithEffects,
       pokemonStats: data.stats,
       pokemonId: data.id,
       height: data.height / divisor,
@@ -160,21 +156,25 @@ export async function fetchAbilityDetails(url: string) {
       effect: effectEntry.effect,
     };
   } catch (error) {
-    console.error("Error fetching ability details:", error);
+    console.error("Error fetching ability effects:", error);
     throw error;
   }
 }
 
-export async function fetchAbilitiesWithEffects(abilities: any[]) {
+export async function fetchAbilitiesWithEffects(name: string) {
   try {
+    const url = `${BASE_ROUTE}/pokemon/${name}`;
+    const data = await fetchData(url);
+    const abilities = data.abilities;
     const abilitiesWithEffects = await Promise.all(
       abilities.map(async (ability: any) => {
         return await fetchAbilityDetails(ability.ability.url);
       })
     );
+
     return abilitiesWithEffects;
   } catch (error) {
-    console.error("Error fetching abilities with effects:", error);
+    console.error("Error fetching ability details:", error);
     throw error;
   }
 }
