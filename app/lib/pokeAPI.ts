@@ -1,5 +1,3 @@
-"use server";
-
 import { PokemonList } from "../types/pokemon";
 
 const BASE_ROUTE = "https://pokeapi.co/api/v2";
@@ -13,29 +11,28 @@ async function fetchData(url: string) {
 }
 
 export async function fetchPokemonDetails(name: string) {
+  const divisor = 10;
   try {
     const url = `${BASE_ROUTE}/pokemon/${name}`;
     const data = await fetchData(url);
-    const pokemonStats = data.stats;
-    const pokemonId = data.id;
-    const height = data.height / 10;
-    const weight = data.weight / 10;
-    const primaryType = data.types[0].type.name;
-    const types = data.types;
-    const imageUrl = data.sprites.other.home.front_default;
+    const abilitiesWithEffects = await fetchAbilitiesWithEffects(
+      data.abilities
+    );
 
     return {
-      pokemonStats,
-      pokemonId,
-      height,
-      weight,
-      primaryType,
-      types,
-      imageUrl,
+      abilities: abilitiesWithEffects,
+      pokemonStats: data.stats,
+      pokemonId: data.id,
+      height: data.height / divisor,
+      weight: data.weight / divisor,
+      primaryType: data.types[0].type.name,
+      types: data.types,
+      imageUrl: data.sprites.other.home.front_default,
       name,
     };
   } catch (error) {
-    console.error(error);
+    console.error(`Error fetching details for ${name}:`, error);
+    throw error;
   }
 }
 // To get all 151 names that are searchable
@@ -45,7 +42,8 @@ export async function fetchPokemonNames() {
     const data = await fetchData(url);
     return data.results;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching Pokémon names:", error);
+    throw error;
   }
 }
 
@@ -68,7 +66,8 @@ export async function fetchPokemonList(offset: number, limit: number) {
 
     return pokemonData;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching Pokémon list:", error);
+    throw error;
   }
 }
 
@@ -76,18 +75,16 @@ export async function fetchSearchedPokemon(name: string) {
   try {
     const url = `${BASE_ROUTE}/pokemon/${name}`;
     const data = await fetchData(url);
-    const pokemonId = data.id;
-    const primaryType = data.types[0].type.name;
-    const imageUrl = data.sprites.other.home.front_default;
 
     return {
-      id: pokemonId,
+      id: data.id,
       name,
-      type: primaryType,
-      url: imageUrl,
+      type: data.types[0].type.name,
+      url: data.sprites.other.home.front_default,
     };
   } catch (error) {
-    console.error(error);
+    console.error(`Error searching for Pokémon ${name}:`, error);
+    throw error;
   }
 }
 
@@ -101,6 +98,7 @@ export async function fetchType(endpoint: string) {
 
     return [doubleDamageFrom, halfDamageFrom, noDamageFrom];
   } catch (error) {
+    console.error("Error fetching type data:", error);
     return null;
   }
 }
@@ -133,7 +131,8 @@ export async function fetchEvolutionChain(id: number) {
       return { name: item?.name, url: item?.imageUrl };
     });
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching evolution chain:", error);
+    throw error;
   }
 }
 
@@ -145,6 +144,37 @@ export async function fetchFlavorText(id: number) {
 
     return flavorTextEntries;
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching flavor text:", error);
+    throw error;
+  }
+}
+
+export async function fetchAbilityDetails(url: string) {
+  try {
+    const abilityDetails = await fetchData(url);
+    const effectEntry = abilityDetails.effect_entries.find(
+      (entry: any) => entry.language.name === "en"
+    );
+    return {
+      name: abilityDetails.name,
+      effect: effectEntry.effect,
+    };
+  } catch (error) {
+    console.error("Error fetching ability details:", error);
+    throw error;
+  }
+}
+
+export async function fetchAbilitiesWithEffects(abilities: any[]) {
+  try {
+    const abilitiesWithEffects = await Promise.all(
+      abilities.map(async (ability: any) => {
+        return await fetchAbilityDetails(ability.ability.url);
+      })
+    );
+    return abilitiesWithEffects;
+  } catch (error) {
+    console.error("Error fetching abilities with effects:", error);
+    throw error;
   }
 }
