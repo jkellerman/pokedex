@@ -10,6 +10,7 @@ Technical assignment using the PokéApi & YodaAPI.
 - [Overview](#overview)
   - [Links](#links)
   - [Built with](#built-with)
+  - [Process](#process)
 
 ## 💭&nbsp;How to run the app
 
@@ -63,3 +64,13 @@ Users should be able to:
 - Vercel
 - [PokéAPI](https://pokeapi.co/docs/v2)
 - [YodaAPI](https://funtranslations.com/api/yoda)
+
+### Process
+
+#### Tanstack Query/React Query
+
+- Translating the effect from English to Yoda required fetching data on the client side. Despite the ability to use server actions in client components, I chose to use TanStack Query because it offers an excellent experience for data fetching and caching. Additionally, caching was crucial due to the rate limit of the Yoda API, which helps prevent unnecessary data requests.
+
+#### Improvements
+
+- One area I would like to explore is utilising TanStack Query for pagination with server components, as the initial Pokémon list data is rendered on the server. Currently, when users load more Pokémon, the data is not cached, meaning they would have to fetch those Pokémon again if they navigate away from the page and return.
