@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import CardList from "../CardList/CardList";
-import Icon from "./Icon";
+
 import { Pokemon, PokemonList } from "@/app/types/pokemon";
 import { fetchPokemonList, fetchSearchedPokemon } from "@/app/lib/pokeAPI";
 import Content from "../Content/Content";
@@ -9,6 +9,7 @@ import { CardSkeleton } from "../skeletons";
 import { CardGrid, CardListItem } from "../CardGrid/CardGrid";
 import { useDebouncedCallback } from "use-debounce";
 import { Button } from "../Button/Button";
+import Icon from "../Icon/Icon";
 interface PokemonListProps {
   pokemonList: PokemonList[];
   pokemonNames: Pokemon[];
@@ -107,7 +108,7 @@ export default function AutoComplete({
       <div className="w-full h-16 lg:h-24 bg-gradient-to-r from-primary to-secondary"></div>
       <div className="flex flex-col max-w-4xl items-center justify-center mx-auto w-11/12 lg:w-full">
         <form className="flex gap-1 py-4 px-6 rounded-lg items-center border-2 border-background drop-shadow-lg bg-background m-[-2rem] w-full mb-8">
-          <Icon />
+          <Icon icon="search" className=" w-6 h-6" />
           <input
             placeholder="Search for a pokèmon"
             type="text"

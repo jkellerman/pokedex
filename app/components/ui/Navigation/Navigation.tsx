@@ -44,7 +44,7 @@ export default function Navigation({
           {direction === "left" ? (
             <span className="flex justify-between sm:justify-evenly items-center gap-4 min-w-full px-4 sm:px-6">
               <span className="bg-white p-1 sm:p-2 rounded-full">
-                <Icon icon="chevronLeft" width="12" height="12" />
+                <Icon icon="chevronLeft" className=" w-6 h-6" />
               </span>
               <span className="flex -translate-y-2">
                 {index}&nbsp;
@@ -58,7 +58,7 @@ export default function Navigation({
                 <span className="hidden sm:block">{formatId(pokemonId)}</span>
               </span>
               <span className="bg-white p-1 sm:p-2 rounded-full">
-                <Icon icon="chevronRight" width="12" height="12" />
+                <Icon icon="chevronRight" className=" w-6 h-6" />
               </span>
             </span>
           )}
