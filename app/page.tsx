@@ -1,6 +1,5 @@
 import SearchList from "./components/ui/SearchList/SearchList";
 import { fetchPokemonList, fetchPokemonNames } from "./lib/pokeAPI";
-import { PokemonList } from "./types/pokemon";
 
 export default async function Home() {
   const pokemonList = await fetchPokemonList(0, 20);
@@ -8,10 +7,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col items-center justify-between">
-      <SearchList
-        pokemonList={pokemonList as PokemonList[]}
-        pokemonNames={pokemonNames}
-      />
+      <SearchList pokemonList={pokemonList} pokemonNames={pokemonNames} />
     </main>
   );
 }

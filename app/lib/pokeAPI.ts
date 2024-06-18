@@ -1,8 +1,16 @@
-import { PokemonList } from "../types/pokemon";
+import {
+  Pokemon,
+  PokemonAbilityDetails,
+  PokemonDamageRelation,
+  PokemonDetails,
+  PokemonEvolutionChain,
+  PokemonNames,
+  PokemonSpecies,
+} from "./../types/pokemon";
 
 const BASE_ROUTE = "https://pokeapi.co/api/v2";
 
-async function fetchData(url: string) {
+export async function fetchData<T>(url: string): Promise<T> {
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error("Network response was not ok");
@@ -14,7 +22,7 @@ export async function fetchPokemonDetails(name: string) {
   const divisor = 10;
   try {
     const url = `${BASE_ROUTE}/pokemon/${name}`;
-    const data = await fetchData(url);
+    const data = await fetchData<PokemonDetails>(url);
 
     return {
       pokemonStats: data.stats,
@@ -35,7 +43,7 @@ export async function fetchPokemonDetails(name: string) {
 export async function fetchPokemonNames() {
   try {
     const url = `${BASE_ROUTE}/pokemon/?limit=151`;
-    const data = await fetchData(url);
+    const data = await fetchData<PokemonNames>(url);
     return data.results;
   } catch (error) {
     console.error("Error fetching Pokémon names:", error);
@@ -47,11 +55,11 @@ export async function fetchPokemonNames() {
 export async function fetchPokemonList(offset: number, limit: number) {
   try {
     const url = `${BASE_ROUTE}/pokemon/?offset=${offset}&limit=${limit}`;
-    const data = await fetchData(url);
-    const urls = data.results.map((pokemon: PokemonList) => pokemon.url);
+    const data = await fetchData<PokemonNames>(url);
+    const urls = data.results.map((pokemon: Pokemon) => pokemon.url);
 
     const promises = await Promise.all(
-      urls.map((url: string) => fetchData(url))
+      urls.map((url: string) => fetchData<PokemonDetails>(url))
     );
     const pokemonData = promises.map((item) => ({
       name: item.name,
@@ -70,7 +78,7 @@ export async function fetchPokemonList(offset: number, limit: number) {
 export async function fetchSearchedPokemon(name: string) {
   try {
     const url = `${BASE_ROUTE}/pokemon/${name}`;
-    const data = await fetchData(url);
+    const data = await fetchData<PokemonDetails>(url);
 
     return {
       id: data.id,
@@ -87,7 +95,7 @@ export async function fetchSearchedPokemon(name: string) {
 export async function fetchType(endpoint: string) {
   try {
     const url = `${endpoint}`;
-    const data = await fetchData(url);
+    const data = await fetchData<PokemonDamageRelation>(url);
     const doubleDamageFrom = data.damage_relations.double_damage_from;
     const halfDamageFrom = data.damage_relations.half_damage_from;
     const noDamageFrom = data.damage_relations.no_damage_from;
@@ -102,15 +110,17 @@ export async function fetchType(endpoint: string) {
 export async function fetchEvolutionChain(id: number) {
   try {
     const speciesUrl = `${BASE_ROUTE}/pokemon-species/${id}`;
-    const speciesData = await fetchData(speciesUrl);
+    const speciesData = await fetchData<PokemonSpecies>(speciesUrl);
     const evolutionChainUrl = speciesData.evolution_chain.url;
-    const evolutionChainData = await fetchData(evolutionChainUrl);
+    const evolutionChainData = await fetchData<PokemonEvolutionChain>(
+      evolutionChainUrl
+    );
 
     const firstEvolution = evolutionChainData.chain.species.name;
     const secondEvolution =
-      evolutionChainData.chain.evolves_to[0]?.species.name;
+      evolutionChainData.chain.evolves_to[0]?.species?.name;
     const thirdEvolution =
-      evolutionChainData.chain.evolves_to[0]?.evolves_to[0]?.species.name;
+      evolutionChainData.chain.evolves_to[0]?.evolves_to[0]?.species?.name;
 
     const result = [firstEvolution];
     if (secondEvolution) result.push(secondEvolution);
@@ -135,7 +145,7 @@ export async function fetchEvolutionChain(id: number) {
 export async function fetchFlavorText(id: number) {
   try {
     const speciesUrl = `${BASE_ROUTE}/pokemon-species/${id}`;
-    const speciesData = await fetchData(speciesUrl);
+    const speciesData = await fetchData<PokemonSpecies>(speciesUrl);
     const flavorTextEntries = speciesData.flavor_text_entries[1].flavor_text;
 
     return flavorTextEntries;
@@ -147,13 +157,14 @@ export async function fetchFlavorText(id: number) {
 
 export async function fetchAbilityDetails(url: string) {
   try {
-    const abilityDetails = await fetchData(url);
+    const abilityDetails = await fetchData<PokemonAbilityDetails>(url);
     const effectEntry = abilityDetails.effect_entries.find(
-      (entry: any) => entry.language.name === "en"
+      (entry) => entry.language.name === "en"
     );
+
     return {
       name: abilityDetails.name,
-      effect: effectEntry.effect,
+      effect: effectEntry?.effect,
     };
   } catch (error) {
     console.error("Error fetching ability effects:", error);
@@ -164,10 +175,10 @@ export async function fetchAbilityDetails(url: string) {
 export async function fetchAbilitiesWithEffects(name: string) {
   try {
     const url = `${BASE_ROUTE}/pokemon/${name}`;
-    const data = await fetchData(url);
+    const data = await fetchData<PokemonDetails>(url);
     const abilities = data.abilities;
     const abilitiesWithEffects = await Promise.all(
-      abilities.map(async (ability: any) => {
+      abilities.map(async (ability) => {
         return await fetchAbilityDetails(ability.ability.url);
       })
     );

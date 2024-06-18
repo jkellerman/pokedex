@@ -1,4 +1,4 @@
-import { children } from "@/app/types/pokemon";
+import { children } from "@/app/types/index";
 
 export function CardGrid({ children }: children) {
   return (

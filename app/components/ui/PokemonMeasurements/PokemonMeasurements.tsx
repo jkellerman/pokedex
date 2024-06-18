@@ -1,6 +1,6 @@
 interface PokemonMeasurementsProps {
-  height: string | undefined;
-  weight: string | undefined;
+  height: number;
+  weight: number;
 }
 
 export default function PokemonMeasurements({
@@ -11,11 +11,11 @@ export default function PokemonMeasurements({
     <div className="flex flex-col xl:items-end">
       <div>
         <span className="font-bold">Weight: </span>
-        <span>{weight}kg</span>
+        <span>{weight.toFixed(1)}kg</span>
       </div>
       <div>
         <span className="font-bold">Height: </span>
-        <span>{height}m</span>
+        <span>{height.toFixed(1)}m</span>
       </div>
     </div>
   );

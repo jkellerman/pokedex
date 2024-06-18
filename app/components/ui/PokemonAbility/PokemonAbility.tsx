@@ -12,41 +12,31 @@ interface PokemonAbilityProps {
 
 export default function PokemonAbility({ name, effect }: PokemonAbilityProps) {
   const [isYoda, setIsYoda] = useState(false);
-  const [attemptTranslation, setAttemptTranslation] = useState(false);
-  const [resultFetched, setResultFetched] = useState(false);
 
   const {
     data: translatedEffect,
     isLoading,
     isError,
-  } = useYodaTranslation(effect, attemptTranslation);
+    isSuccess,
+    refetch,
+  } = useYodaTranslation(effect);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setIsYoda(true);
+    }
+  }, [isSuccess]);
 
   // Toggle translation state
   const handleToggle = () => {
-    if (isYoda && resultFetched) {
+    if (isYoda && isSuccess) {
       setIsYoda(false);
-    } else if (!isYoda && resultFetched) {
+    } else if (!isYoda && isSuccess) {
       setIsYoda(true);
     } else {
-      setAttemptTranslation(true);
+      refetch();
     }
   };
-
-  // handle successful translation fetch
-  useEffect(() => {
-    if (!isLoading && !isError && translatedEffect) {
-      setIsYoda(true);
-      setResultFetched(true);
-      setAttemptTranslation(false);
-    }
-  }, [isLoading, isError, translatedEffect]);
-
-  //  handle errors
-  useEffect(() => {
-    if (isError) {
-      setAttemptTranslation(false);
-    }
-  }, [isError]);
 
   return (
     <div className="mb-4">
@@ -69,12 +59,11 @@ export default function PokemonAbility({ name, effect }: PokemonAbilityProps) {
           </span>
         )}
       </div>
-      {isLoading && (
+      {isLoading ? (
         <div data-testid="effect-loader">
           <AbilitiesSkeleton />
         </div>
-      )}
-      {!isLoading && (
+      ) : (
         <p className={isYoda ? "text-green-600" : "text-foreground"}>
           {isYoda ? translatedEffect : effect}
         </p>
