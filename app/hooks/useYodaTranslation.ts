@@ -1,19 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchYodaTranslation } from "../lib/yodaAPI";
 
-const useYodaTranslation = (text: string, enabled: boolean) => {
-  const { data, isLoading, isError } = useQuery({
+const useYodaTranslation = (text: string) => {
+  const { data, isLoading, isError, isSuccess, refetch } = useQuery({
     queryKey: ["yodaTranslation", text],
     queryFn: () => fetchYodaTranslation(text),
-    enabled: enabled,
+    enabled: false,
     gcTime: Infinity,
     retry: false,
   });
 
   return {
     data: data,
+    isSuccess,
     isLoading,
     isError,
+    refetch,
   };
 };
 

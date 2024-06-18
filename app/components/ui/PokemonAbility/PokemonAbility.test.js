@@ -24,6 +24,8 @@ describe("PokemonAbility", () => {
         data: null,
         isLoading: false,
         isError: false,
+        isSuccess: false,
+        refetch: jest.fn(),
       });
 
       render(
@@ -56,6 +58,8 @@ describe("PokemonAbility", () => {
         data: null,
         isLoading: true,
         isError: false,
+        isSuccess: false,
+        refetch: jest.fn(),
       });
 
       render(
@@ -82,6 +86,8 @@ describe("PokemonAbility", () => {
         data: null,
         isLoading: false,
         isError: true,
+        isSuccess: false,
+        refetch: jest.fn(),
       });
 
       render(
@@ -112,10 +118,13 @@ describe("PokemonAbility", () => {
 
   describe("when translation is successful", () => {
     it("shows the translated effect", async () => {
+      const refetchMock = jest.fn();
       useYodaTranslation.mockReturnValue({
         data: null,
         isLoading: false,
         isError: false,
+        isSuccess: false,
+        refetch: refetchMock,
       });
 
       render(
@@ -135,6 +144,8 @@ describe("PokemonAbility", () => {
         data: "Translated Effect",
         isLoading: false,
         isError: false,
+        isSuccess: true,
+        refetch: refetchMock,
       });
 
       render(
