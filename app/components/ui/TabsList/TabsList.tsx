@@ -2,13 +2,13 @@
 import React from "react";
 import TabListImage from "./Image/Image";
 import * as Tabs from "@radix-ui/react-tabs";
-import { PokemonList, Stats } from "@/app/types/pokemon";
+import { PokemonList, PokemonStats } from "@/app/types/pokemon";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import clsx from "clsx";
 import { tabTheme } from "../themes";
 
 interface TabsListProps {
-  pokemonStats: Stats[];
+  pokemonStats: PokemonStats[];
   primaryType: string;
   evolutionChain: PokemonList[];
 }
@@ -48,7 +48,7 @@ export default function TabsList({
           </Tabs.List>
 
           <Tabs.Content value="tab1" className="sm:self-center xl:self-auto">
-            {pokemonStats.map((item: Stats, i: number) => {
+            {pokemonStats.map((item: PokemonStats, i: number) => {
               return (
                 <div key={i} className="flex items-center gap-2 mb-4">
                   <span className=" min-w-[80px] uppercase text-background font-bold">

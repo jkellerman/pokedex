@@ -7,7 +7,7 @@ import {
   fetchPokemonNames,
   fetchType,
 } from "../lib/pokeAPI";
-import { PokemonList, Types, Pokemon } from "../types/pokemon";
+import { PokemonList, PokemonType, Pokemon } from "../types/pokemon";
 import { lalezar } from "../fonts";
 import PokemonImage from "../components/ui/PokemonImage/PokemonImage";
 import Navigation from "../components/ui/Navigation/Navigation";
@@ -35,35 +35,41 @@ export default async function PokemonPage({
   const pokemonNames = await fetchPokemonNames();
   const pokemonAbilities = await fetchAbilitiesWithEffects(name);
 
-  const evolutionChain = await fetchEvolutionChain(pokemonData?.pokemonId);
+  const evolutionChain = await fetchEvolutionChain(pokemonData.pokemonId);
 
-  const flavorText = await fetchFlavorText(pokemonData?.pokemonId);
-  const typeNames = pokemonData?.types.map((item: Types) => item.type.name);
-  const typeUrls = pokemonData?.types.map((item: Types) => item.type.url);
+  const flavorText = await fetchFlavorText(pokemonData.pokemonId);
+  const typeNames = pokemonData.types.map(
+    (item: PokemonType) => item.type.name
+  );
+  const typeUrls = pokemonData.types.map((item: PokemonType) => item.type.url);
+
   const [firstType, secondType] = await Promise.all([
     fetchType(typeUrls[0]),
     fetchType(typeUrls[1]),
   ]);
 
-  // the pokemons biggest weaknesses
-  const firstTypeDoubleDamage =
-    firstType && firstType[0].map((item: Pokemon) => item.name);
+  // Define default empty arrays for the types that could be null
+  const firstTypeDoubleDamage = firstType
+    ? firstType[0].map((item: Pokemon) => item.name)
+    : [];
   const secondTypeDoubleDamage = secondType
     ? secondType[0].map((item: Pokemon) => item.name)
     : [];
   const pokemonDoubleDamageTypes = firstTypeDoubleDamage.concat(
     secondTypeDoubleDamage
   );
-  // Types the pokemon receive less damage from (needed to get the correct weaknesses for each pokemon)
-  const firstTypeHalfDamage =
-    firstType && firstType[1].map((item: Pokemon) => item.name);
+
+  const firstTypeHalfDamage = firstType
+    ? firstType[1].map((item: Pokemon) => item.name)
+    : [];
   const secondTypeHalfDamage = secondType
     ? secondType[1].map((item: Pokemon) => item.name)
     : [];
-  const firstTypeNoDamage =
-    firstType && firstType[2].map((item: Pokemon) => item.name);
+  const firstTypeNoDamage = firstType
+    ? firstType[2].map((item: Pokemon) => item.name)
+    : [];
   const secondTypeNoDamage = secondType
-    ? secondType[2]?.map((item: Pokemon) => item.name)
+    ? secondType[2].map((item: Pokemon) => item.name)
     : [];
 
   const damageResistantTypes = firstTypeHalfDamage.concat(
@@ -74,14 +80,14 @@ export default async function PokemonPage({
 
   // Check if pokemonDoubleDamageTypes contains damage Resistant Types to get the correct weaknesses
   const checkArrays = pokemonDoubleDamageTypes.filter(
-    (type: Pokemon) => !damageResistantTypes.includes(type)
+    (type: string) => !damageResistantTypes.includes(type)
   );
   const weaknesses = checkArrays.filter(
-    (type: Pokemon, index: number, array: Pokemon[]) =>
+    (type: string, index: number, array: string[]) =>
       array.indexOf(type) === index
   );
   const index = pokemonNames.findIndex(
-    (pokemon: PokemonList) => pokemon.name === name
+    (pokemon: Pokemon) => pokemon.name === name
   );
 
   let prevPokemon = null;
@@ -101,16 +107,16 @@ export default async function PokemonPage({
       <nav className="w-full h-16 sm:h-[100px] xl:h-[133px] flex flex-row gap-4 ">
         <Navigation
           index={prevPokemon}
-          primaryType={pokemonData?.primaryType}
+          primaryType={pokemonData.primaryType}
           direction="left"
-          pokemonId={pokemonData?.pokemonId - 1}
+          pokemonId={pokemonData.pokemonId - 1}
         />
 
         <Navigation
           index={nextPokemon}
-          primaryType={pokemonData?.primaryType}
+          primaryType={pokemonData.primaryType}
           direction="right"
-          pokemonId={pokemonData?.pokemonId + 1}
+          pokemonId={pokemonData.pokemonId + 1}
         />
       </nav>
       <div className="flex flex-col max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-3xl xl:max-w-5xl 2xl:max-w-[1062px] items-center justify-center mx-auto w-11/12 lg:w-full bg-white mt-[-20px] md:mt-[-30px] z-10 relative py-8 sm:py-16 sm:px-16 rounded-t-[50px]">
@@ -121,7 +127,7 @@ export default async function PokemonPage({
           <span
             className={`${lalezar.className} uppercase text-quinary-light text-lg sm:text-2xl`}
           >
-            {formatId(pokemonData?.pokemonId)}
+            {formatId(pokemonData.pokemonId)}
           </span>
         </section>
         <section className="w-full ">
@@ -135,8 +141,8 @@ export default async function PokemonPage({
                 <Content>{flavorText}</Content>
               </div>
               <PokemonMeasurements
-                weight={pokemonData?.weight.toFixed(1)}
-                height={pokemonData?.height.toFixed(1)}
+                weight={pokemonData.weight}
+                height={pokemonData.height}
               />
             </div>
           </div>
@@ -147,23 +153,23 @@ export default async function PokemonPage({
         </section>
         <div className="grid grid-cols-12 grid-rows-2 xl:grid-rows-none gap-4  mb-8">
           <div className=" col-span-12 row-span-1 xl:col-span-6 bg-tertiary rounded-xl">
-            <PokemonImage src={pokemonData?.imageUrl} name={name} />
+            <PokemonImage src={pokemonData.imageUrl} name={name} />
           </div>
 
           <TabsList
-            pokemonStats={pokemonData?.pokemonStats}
-            primaryType={pokemonData?.primaryType}
+            pokemonStats={pokemonData.pokemonStats}
+            primaryType={pokemonData.primaryType}
             evolutionChain={evolutionChain as PokemonList[]}
           />
         </div>
         <section className="self-start">
           <h2 className="text-xl font-bold mb-4">Abilities</h2>
           <Suspense fallback={<AbilitiesSkeleton />}>
-            {pokemonAbilities?.map((ability, i) => (
+            {pokemonAbilities.map((ability, i) => (
               <PokemonAbility
                 key={i}
-                name={ability?.name}
-                effect={ability?.effect}
+                name={ability.name}
+                effect={ability.effect as string}
               />
             ))}
           </Suspense>

@@ -6,9 +6,9 @@ import { formatId } from "@/app/utils/utils";
 import { navigationTheme } from "../themes";
 
 interface NavigationProps {
-  index: number;
+  index: string | null;
   primaryType: string;
-  direction: string;
+  direction: "left" | "right";
   pokemonId: number;
 }
 
